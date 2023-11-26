@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,8 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           title: const Column(
             children: [
               SizedBox(
@@ -64,15 +65,17 @@ class _HomepageState extends State<Homepage> {
                             child: const Text("Yes")),
                       ]);
                 },
-                icon: FaIcon(FontAwesomeIcons.arrowRightFromBracket,color: Colors.black,))
-
+                icon: FaIcon(
+                  FontAwesomeIcons.arrowRightFromBracket,
+                  color: Colors.black,
+                ))
           ],
           leading: IconButton(
               onPressed: () {
                 Get.to(() => AllChatScreen());
               },
               icon: const FaIcon(
-                FontAwesomeIcons.commentDots,
+                FontAwesomeIcons.solidMessage,
                 color: Colors.black,
               )),
         ),
@@ -100,9 +103,11 @@ class _HomepageState extends State<Homepage> {
                               child: TextField(
                             decoration: InputDecoration(
                                 suffixIcon: const Icon(Icons.search),
+                                filled: true,
+                                fillColor: Colors.grey.shade100,
                                 hintText: "Search here",
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30))),
+                                    borderRadius: BorderRadius.circular(0))),
                           ))
                         ],
                       ),
@@ -140,13 +145,12 @@ class _HomepageState extends State<Homepage> {
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
-                            height: 200,
-                            width: 200,
+                                    colors: [Colors.black, Colors.pink])),
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -177,18 +181,17 @@ class _HomepageState extends State<Homepage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25)),
                           child: Container(
-                            height: 200,
-                            width: 200,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
+                                    colors: [Colors.black, Colors.pink])),
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -225,13 +228,12 @@ class _HomepageState extends State<Homepage> {
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
-                            height: 200,
-                            width: 200,
+                                    colors: [Colors.black, Colors.pink])),
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -267,13 +269,13 @@ class _HomepageState extends State<Homepage> {
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
+                                    colors: [Colors.black, Colors.pink])),
                             height: 200,
-                            width: 200,
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -309,13 +311,13 @@ class _HomepageState extends State<Homepage> {
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
+                                    colors: [Colors.black, Colors.pink])),
                             height: 200,
-                            width: 200,
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -351,13 +353,13 @@ class _HomepageState extends State<Homepage> {
                                 gradient: LinearGradient(
                                     begin: Alignment.topRight,
                                     end: Alignment.bottomLeft,
-                                    colors: [Colors.green, Colors.pink])),
+                                    colors: [Colors.black, Colors.pink])),
                             height: 200,
-                            width: 200,
                             child: Column(
                               children: [
                                 Container(
                                   height: 175,
+                                  width: 200,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(25),
@@ -392,20 +394,23 @@ class _HomepageState extends State<Homepage> {
                       Expanded(
                         child: Divider(
                           thickness: 0.7,
-                          color: Colors.black,
+                          color: Colors.grey,
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 2, right: 2),
                         child: Text(
-                          "Newly Arrived",
-                          style: TextStyle(color: Colors.green, fontSize: 16),
+                          "Featured",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
                         ),
                       ),
                       Expanded(
                         child: Divider(
                           thickness: 0.7,
-                          color: Colors.black,
+                          color: Colors.grey,
                         ),
                       ),
                     ],

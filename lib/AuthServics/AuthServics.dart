@@ -83,7 +83,7 @@ class AuthSevices {
                 .set({
               "Username": user.displayName,
               'Email': user.email,
-              'uid': user.id,
+              'uid': user1.uid,
               "Password": '',
               "Profile Picture": user.photoUrl,
               'Date Joined': DateTime.now(),

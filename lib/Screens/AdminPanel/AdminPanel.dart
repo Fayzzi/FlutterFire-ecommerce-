@@ -433,6 +433,7 @@ class _AdminPageState extends State<AdminPage> {
                                                           return SingleChildScrollView(
                                                             scrollDirection:
                                                                 Axis.horizontal,
+                                                            physics: BouncingScrollPhysics(),
                                                             child: Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -460,14 +461,17 @@ class _AdminPageState extends State<AdminPage> {
                                                                           150,
                                                                       decoration: BoxDecoration(
                                                                           gradient: const LinearGradient(
-                                                                              begin: Alignment.topRight,
-                                                                              end: Alignment.bottomCenter,
-                                                                              colors: [
-                                                                                Colors.blue,
-                                                                                Colors.green
-                                                                              ]),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)),
+                                                                            colors: [
+                                                                              Colors.pink,
+                                                                              Colors.blue,
+                                                                              Color(0xFF4A00E0)
+                                                                            ],
+                                                                            begin:
+                                                                            Alignment.topRight,
+                                                                            end:
+                                                                            Alignment.bottomLeft,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.circular(20)),
                                                                       child:
                                                                           Center(
                                                                         child:
@@ -524,14 +528,17 @@ class _AdminPageState extends State<AdminPage> {
                                                                           150,
                                                                       decoration: BoxDecoration(
                                                                           gradient: const LinearGradient(
-                                                                              begin: Alignment.topRight,
-                                                                              end: Alignment.bottomCenter,
-                                                                              colors: [
-                                                                                Colors.blue,
-                                                                                Colors.green
-                                                                              ]),
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(20)),
+                                                                            colors: [
+                                                                              Colors.pink,
+                                                                              Colors.blue,
+                                                                              Color(0xFF4A00E0)
+                                                                            ],
+                                                                            begin:
+                                                                            Alignment.topRight,
+                                                                            end:
+                                                                            Alignment.bottomLeft,
+                                                                          ),
+                                                                          borderRadius: BorderRadius.circular(20)),
                                                                       child:
                                                                           Center(
                                                                         child:
@@ -588,12 +595,16 @@ class _AdminPageState extends State<AdminPage> {
                                                                           150,
                                                                       decoration: BoxDecoration(
                                                                           gradient: const LinearGradient(
-                                                                              begin: Alignment.topRight,
-                                                                              end: Alignment.bottomCenter,
-                                                                              colors: [
-                                                                                Colors.blue,
-                                                                                Colors.green
-                                                                              ]),
+                                                                            colors: [
+                                                                              Colors.pink,
+                                                                              Colors.blue,
+                                                                              Color(0xFF4A00E0)
+                                                                            ],
+                                                                            begin:
+                                                                            Alignment.topRight,
+                                                                            end:
+                                                                            Alignment.bottomLeft,
+                                                                          ),
                                                                           borderRadius:
                                                                               BorderRadius.circular(20)),
                                                                       child:
@@ -652,12 +663,16 @@ class _AdminPageState extends State<AdminPage> {
                                                                           150,
                                                                       decoration: BoxDecoration(
                                                                           gradient: const LinearGradient(
-                                                                              begin: Alignment.topRight,
-                                                                              end: Alignment.bottomCenter,
-                                                                              colors: [
-                                                                                Colors.blue,
-                                                                                Colors.green
-                                                                              ]),
+                                                                            colors: [
+                                                                              Colors.pink,
+                                                                              Colors.blue,
+                                                                              Color(0xFF4A00E0)
+                                                                            ],
+                                                                            begin:
+                                                                            Alignment.topRight,
+                                                                            end:
+                                                                            Alignment.bottomLeft,
+                                                                          ),
                                                                           borderRadius:
                                                                               BorderRadius.circular(20)),
                                                                       child:

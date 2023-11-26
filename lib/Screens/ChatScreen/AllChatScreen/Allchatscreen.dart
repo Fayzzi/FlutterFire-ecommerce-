@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:mad_project_ecommerce/Screens/ChatScreen/ChatScreen.dart';
 
 class AllChatScreen extends StatefulWidget {
-  const AllChatScreen({super.key});
+  const AllChatScreen({Key? key}) : super(key: key);
 
   @override
   State<AllChatScreen> createState() => _AllChatScreenState();
@@ -15,6 +15,7 @@ class AllChatScreen extends StatefulWidget {
 
 class _AllChatScreenState extends State<AllChatScreen> {
   User? user = FirebaseAuth.instance.currentUser;
+
   void _showProfilePicture(String Imageurl) {
     Get.dialog(
       Dialog(
@@ -69,15 +70,15 @@ class _AllChatScreenState extends State<AllChatScreen> {
               child: Text(userData.error.toString()),
             );
           }
-          if (!userData.hasData && !userData.data!.exists) {
+          if (!userData.hasData || !userData.data!.exists) {
             return const Center(
               child: Text('An error has occurred'),
             );
           }
           if (userData.hasData && userData.data!.exists) {
-            Map<String, dynamic> User =
-                userData.data!.data() as Map<String, dynamic>;
-            List<String> chatIds = List<String>.from(User['ChatIds']);
+            Map<String, dynamic> userMap =
+            userData.data!.data() as Map<String, dynamic>;
+            List<String> chatIds = List<String>.from(userMap['ChatIds'] ?? []);
             return ListView.builder(
               itemCount: chatIds.length,
               itemBuilder: (context, i) {
@@ -101,169 +102,175 @@ class _AllChatScreenState extends State<AllChatScreen> {
                     if (!chatSnap.hasData || chatSnap.data!.docs.isEmpty) {
                       return const SizedBox(); // No data available, return an empty container
                     }
-                   if(chatSnap.hasData || chatSnap.data!.docs.isNotEmpty){
-                     var latestMessage = chatSnap.data!.docs.first;
-                     return ListTile(
-                       onTap: () {
-                         Get.to(() => ChatScreen(
-                             ProductName: latestMessage['Product Name'],
-                             ChatID: latestMessage['ChatID'],
-                             RecieverEmail:
-                             user!.email == latestMessage['Reciever Email']
-                                 ? latestMessage['Sender Email']
-                                 : latestMessage['Reciever Email'],
-                             RecieverID:
-                             user!.uid == latestMessage['Reciever Id']
-                                 ? latestMessage['Sender ID']
-                                 : latestMessage['Reciever Id'],
-                             SenderEmail: user!.email ?? '',
-                             SenderID: user!.uid));
-                       },
-                       leading: user!.uid == latestMessage['Sender ID']
-                           ? StreamBuilder(
-                         stream: FirebaseFirestore.instance
-                             .collection("Users")
-                             .doc(latestMessage['Reciever Id'])
-                             .snapshots(),
-                         builder: (context, notOwner) {
-                           if (notOwner.connectionState ==
-                               ConnectionState.waiting) {
-                             return const SizedBox();
-                           }
-                           if (notOwner.hasError) {
-                             return const Text(
-                                 'Error loading profile picture');
-                           }
+                    var latestMessage = chatSnap.data!.docs.first;
+                    if (latestMessage.exists) {
+                      return ListTile(
+                        onTap: () {
+                          Get.to(() => ChatScreen(
+                              ProductName: latestMessage['Product Name'],
+                              ChatID: latestMessage['ChatID'],
+                              RecieverEmail: user!.email ==
+                                  latestMessage['Reciever Email']
+                                  ? latestMessage['Sender Email']
+                                  : latestMessage['Reciever Email'],
+                              RecieverID: user!.uid ==
+                                  latestMessage['Reciever Id']
+                                  ? latestMessage['Sender ID']
+                                  : latestMessage['Reciever Id'],
+                              SenderEmail: user!.email ?? '',
+                              SenderID: user!.uid));
+                        },
+                        leading: user!.uid == latestMessage['Sender ID']
+                            ? StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(latestMessage['Reciever Id'])
+                              .snapshots(),
+                          builder: (context, notOwner) {
+                            if (notOwner.connectionState ==
+                                ConnectionState.waiting) {
+                              return const SizedBox();
+                            }
+                            if (notOwner.hasError) {
+                              return const Text(
+                                  'Error loading profile picture');
+                            }
 
-                           if (notOwner.hasData && notOwner.data!.exists) {
-                             Map<String, dynamic> receiveData =
-                             notOwner.data!.data()
-                             as Map<String, dynamic>;
-                             String profilePictureUrl =
-                                 receiveData['Profile Picture'] ?? "";
+                            if (notOwner.hasData &&
+                                notOwner.data!.exists) {
+                              Map<String, dynamic> receiveData =
+                              notOwner.data!.data()
+                              as Map<String, dynamic>;
+                              String profilePictureUrl =
+                                  receiveData['Profile Picture'] ?? "";
 
-                             if (profilePictureUrl.isNotEmpty) {
-                               return CachedNetworkImage(
-                                 imageUrl: profilePictureUrl,
-                                 placeholder: (context, url) =>
-                                     CupertinoActivityIndicator(),
-                                 errorWidget: (context, error, url) =>
-                                     Icon(
-                                       Icons.error,
-                                       color: Colors.red,
-                                     ),
-                                 imageBuilder: (context, imageProvider) {
-                                   return GestureDetector(
-                                     onTap: () {
-                                       _showProfilePicture(
-                                           profilePictureUrl);
-                                     },
-                                     child: CircleAvatar(
-                                       radius: 27,
-                                       backgroundColor: Colors.transparent,
-                                       backgroundImage: imageProvider,
-                                     ),
-                                   );
-                                 },
-                               );
-                             } else {
-                               return const CircleAvatar(
-                                 radius: 27,
-                                 backgroundColor: Colors.transparent,
-                                 backgroundImage:
-                                 AssetImage('images/user.jpg'),
-                               );
-                             }
-                           }
+                              if (profilePictureUrl.isNotEmpty) {
+                                return CachedNetworkImage(
+                                  imageUrl: profilePictureUrl,
+                                  placeholder: (context, url) =>
+                                      CupertinoActivityIndicator(),
+                                  errorWidget: (context, error, url) =>
+                                      Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                      ),
+                                  imageBuilder:
+                                      (context, imageProvider) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _showProfilePicture(
+                                            profilePictureUrl);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 27,
+                                        backgroundColor:
+                                        Colors.transparent,
+                                        backgroundImage: imageProvider,
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return const CircleAvatar(
+                                  radius: 27,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                  AssetImage('images/user.jpg'),
+                                );
+                              }
+                            }
 
-                           return const SizedBox();
-                         },
-                       )
-                           : StreamBuilder(
-                         stream: FirebaseFirestore.instance
-                             .collection("Users")
-                             .doc(latestMessage['Sender ID'])
-                             .snapshots(),
-                         builder: (context, owner) {
-                           if (owner.connectionState ==
-                               ConnectionState.waiting) {
-                             return const SizedBox();
-                           }
-                           if (owner.hasError) {
-                             return const Text(
-                                 'Error loading profile picture');
-                           }
+                            return const SizedBox();
+                          },
+                        )
+                            : StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(latestMessage['Sender ID'])
+                              .snapshots(),
+                          builder: (context, owner) {
+                            if (owner.connectionState ==
+                                ConnectionState.waiting) {
+                              return const SizedBox();
+                            }
+                            if (owner.hasError) {
+                              return const Text(
+                                  'Error loading profile picture');
+                            }
 
-                           if (owner.hasData && owner.data!.exists) {
-                             Map<String, dynamic> receiveData = owner.data!
-                                 .data() as Map<String, dynamic>;
-                             String profilePictureUrl =
-                                 receiveData['Profile Picture'] ?? "";
+                            if (owner.hasData && owner.data!.exists) {
+                              Map<String, dynamic> receiveData =
+                              owner.data!.data()
+                              as Map<String, dynamic>;
+                              String profilePictureUrl =
+                                  receiveData['Profile Picture'] ?? "";
 
-                             if (profilePictureUrl.isNotEmpty) {
-                               return CachedNetworkImage(
-                                 imageUrl: profilePictureUrl,
-                                 placeholder: (context, url) =>
-                                     CupertinoActivityIndicator(),
-                                 errorWidget: (context, error, url) =>
-                                     Icon(
-                                       Icons.error,
-                                       color: Colors.red,
-                                     ),
-                                 imageBuilder: (context, imageProvider) {
-                                   return GestureDetector(
-                                     onTap: () {
-                                       _showProfilePicture(
-                                           profilePictureUrl);
-                                     },
-                                     child: CircleAvatar(
-                                       radius: 27,
-                                       backgroundColor: Colors.transparent,
-                                       backgroundImage: imageProvider,
-                                     ),
-                                   );
-                                 },
-                               );
-                             } else {
-                               return const CircleAvatar(
-                                 radius: 27,
-                                 backgroundColor: Colors.transparent,
-                                 backgroundImage:
-                                 AssetImage('images/user.jpg'),
-                               );
-                             }
-                           }
+                              if (profilePictureUrl.isNotEmpty) {
+                                return CachedNetworkImage(
+                                  imageUrl: profilePictureUrl,
+                                  placeholder: (context, url) =>
+                                      CupertinoActivityIndicator(),
+                                  errorWidget: (context, error, url) =>
+                                      Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                      ),
+                                  imageBuilder:
+                                      (context, imageProvider) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _showProfilePicture(
+                                            profilePictureUrl);
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 27,
+                                        backgroundColor:
+                                        Colors.transparent,
+                                        backgroundImage: imageProvider,
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return const CircleAvatar(
+                                  radius: 27,
+                                  backgroundColor: Colors.transparent,
+                                  backgroundImage:
+                                  AssetImage('images/user.jpg'),
+                                );
+                              }
+                            }
 
-                           return const SizedBox();
-                         },
-                       ),
-                       title: latestMessage['Reciever Id'] == user!.uid
-                           ? Text(
-                         "${latestMessage['Sender Email']} -- ${latestMessage['Product Name']}",
-                         style: const TextStyle(
-                             overflow: TextOverflow.ellipsis),
-                       )
-                           : Text(
-                           "${latestMessage['Reciever Email']} -- ${latestMessage['Product Name']}",
-                           style: const TextStyle(
-                               overflow: TextOverflow.ellipsis)),
-                       subtitle: latestMessage['Sender ID'] == user!.uid
-                           ? Text(
-                         'Me: ${latestMessage['Message']}',
-                         overflow: TextOverflow
-                             .ellipsis, // Assuming there is a 'message' field in your chat data
-                         style: const TextStyle(color: Colors.grey),
-                       )
-                           : Text(
-                         '${latestMessage['Message']}',
-                         overflow: TextOverflow
-                             .ellipsis, // Assuming there is a 'message' field in your chat data
-                         style: const TextStyle(color: Colors.grey),
-                       ),
-                       trailing: const Icon(Icons.arrow_forward_ios),
-                     );
-                   }
-                   return SizedBox();
+                            return const SizedBox();
+                          },
+                        ),
+                        title: latestMessage['Reciever Id'] == user!.uid
+                            ? Text(
+                          "${latestMessage['Sender Email']} -- ${latestMessage['Product Name']}",
+                          style: const TextStyle(
+                              overflow: TextOverflow.ellipsis),
+                        )
+                            : Text(
+                            "${latestMessage['Reciever Email']} -- ${latestMessage['Product Name']}",
+                            style: const TextStyle(
+                                overflow: TextOverflow.ellipsis)),
+                        subtitle: latestMessage['Sender ID'] == user!.uid
+                            ? Text(
+                          'Me: ${latestMessage['Message'] ?? ""}',
+                          overflow: TextOverflow
+                              .ellipsis,
+                          style: const TextStyle(color: Colors.grey),
+                        )
+                            : Text(
+                          '${latestMessage['Message'] ?? ""}',
+                          overflow: TextOverflow
+                              .ellipsis,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                      );
+                    }
+                    return const SizedBox();
                   },
                 );
               },

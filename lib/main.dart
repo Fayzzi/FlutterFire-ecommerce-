@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mad_project_ecommerce/BottomnavigationBar/BottomnavigationBar.dart';
-import 'package:mad_project_ecommerce/SaadProject/HomeScreen.dart';
 
 import 'AuthServics/AuthServics.dart';
 import 'Controllers/controllers.dart';
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
-              elevation: 0, backgroundColor: Colors.white, centerTitle: true)),
+              elevation: 0.0, backgroundColor: Colors.white, centerTitle: true)),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

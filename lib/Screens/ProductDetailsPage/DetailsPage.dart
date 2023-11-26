@@ -782,7 +782,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                 productData['Description'],
                                                 style: const TextStyle(
                                                   color: Colors.black54,
-                                                  fontSize: 20,
+                                                  fontSize: 19.5,
                                                 ),
                                                 // or TextOverflow.clip, depending on your preference
                                                 textAlign: TextAlign
@@ -933,7 +933,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                 Expanded(
                                                   child: Divider(
                                                     thickness: 0.7,
-                                                    color: Colors.black,
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
                                                 Padding(
@@ -942,14 +942,14 @@ class _DetailsPageState extends State<DetailsPage> {
                                                   child: Text(
                                                     'Other Products',
                                                     style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize: 16),
+                                                        color: Colors.black,
+                                                        fontSize: 20),
                                                   ),
                                                 ),
                                                 Expanded(
                                                   child: Divider(
                                                     thickness: 0.7,
-                                                    color: Colors.black,
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
                                               ],

@@ -148,7 +148,7 @@ class Helper extends StatelessWidget {
                               await FirebaseFirestore.instance
                                   .collection('Users')
                                   .doc(user!.uid)
-                                  .collection('Fav')
+                                  .collection('Carted')
                                   .doc(doc.id)
                                   .set({
                                 "Product name":
@@ -180,7 +180,7 @@ class Helper extends StatelessWidget {
                               await FirebaseFirestore.instance
                                   .collection('Users')
                                   .doc(user!.uid)
-                                  .collection('Fav')
+                                  .collection('Carted')
                                   .doc(doc.id)
                                   .set({
                                 "Product name":
@@ -206,7 +206,7 @@ class Helper extends StatelessWidget {
                               });
                             }
                             Get.snackbar("Success",
-                                "${docData['Product name']} added to Favorites",
+                                "${docData['Product name']} added to Carts",
                                 snackPosition: SnackPosition.BOTTOM,
                                 isDismissible: true,
                                 duration:
@@ -214,10 +214,14 @@ class Helper extends StatelessWidget {
                                 colorText: Colors.white,
                                 backgroundColor: Colors.green);
                           },
-                            child: FaIcon(FontAwesomeIcons.solidHeart,color: Colors.red,))
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black,
+                              radius: 15,
+                              child: FaIcon(FontAwesomeIcons.plus,color: Colors.white,),
+                            ))
                       ],
                     ),
-                   
+
 
                   ],
                 ),

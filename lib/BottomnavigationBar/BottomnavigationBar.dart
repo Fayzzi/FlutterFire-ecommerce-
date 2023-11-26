@@ -69,7 +69,8 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget>
                 )),
             bottomNavigationBar: Obx(
               () => BottomNavigationBar(
-                selectedItemColor: Colors.black,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: Colors.blue,
                 showSelectedLabels: true,
                elevation: 1,
                 unselectedItemColor: Colors.grey,
